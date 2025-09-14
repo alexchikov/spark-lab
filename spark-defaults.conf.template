@@ -1,0 +1,6 @@
+# Пример файла spark-default.conf:
+spark.master                     spark://<public-ip>:7077
+spark.driver.bindAddress	 127.0.0.1
+spark.ui.port			 4040
+spark.submit.deployMode cluster
+spark.executor.memory   2g

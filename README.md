@@ -1,1 +1,79 @@
 # spark-lab
+
+
+## Создание standalone кластера Spark
+
+**Шаги:**
+1. Заходим на [яндекс облако](https://console.yandex.cloud)
+2. Заказываем две виртуальные машины, конфигурация следующая:
+   * *OS* &mdash; любой дистрибутив Linux, который вам удобен (личная рекомендация Ubuntu 22.04)
+   * *Диск* &mdash; HDD, не более 40 гб
+   * *Выч. ресурсы* &mdash; 4 vCPU, 8 гб RAM
+   * Создаем ssh ключ для подключения к машинам по ssh, [инструкция](https://yandex.cloud/ru/docs/compute/operations/vm-connect/ssh)
+   * Для машин задаем имена sparkmaster и sparkworker
+3. Подключаемся к sparkmaster
+4. Обновляем список пакетов командой `sudo apt update` и устанавливаем java 11 версии с помощью команды `sudo apt install openjdk-11-jdk -y`.
+5. Далее редактируем файл `~/.bashrc`, длбавляем в конец строку:
+   ```bash
+   export JAVA_HOME= # здесь указываем домашнюю директорию Java
+   export PATH=$PATH:$JAVA_HOME
+   ```
+   Директорию с Java можно узнать с помощью команды `update-alternatives --config java`
+6. Скачиваем spark с помощью команды `wget https://dlcdn.apache.org/spark/spark-3.5.6/spark-3.5.6-bin-hadoop3.tgz` и распаковываем полученный архив
+7. Переименовываем его в папку `/opt/spark`
+8. В каталоге `/opt/spark/conf` находим шаблоны для файлов конфигураций spark. Убираем постфикс `.template` дял каждого из них
+9. Прежде чем добавить worker в файл с конфигурацией `workers` необходимо добавить его в `/etc/hosts`. Пример:
+    ```bash
+    # ...
+    123.123.23.23 worker
+    ```
+10. Теперь записываем хост worker в файл `workers` конфигурации Spark
+11. Далее обновить конфигурации `spark-default.conf` и `spark-env.sh`, чтобы можно было подключаться к webui `spark мастера`. Примеры конфигураций есть в репозитории.
+12. Обновляем файл `~/.bashrc`, добавляем в конец файла:
+    ```bash
+    export SPARK_HOME=/opt/spark
+    export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+    ```
+    После этого выполняем команду `source ~/.bashrc`
+13. Далее повторяем шаги 4-8, 11-12 на второй, worker-машине.
+14. После этого на sparkmaster можно запускать master командой `start-master.sh -p 7077`.
+15. На той же машине мы можем также запустить и `worker` &mdash; командой `start-worker.sh spark://<spark-master-uri>`
+16. После этого запускаем worker и на второй, worker-машине.
+17. После проделанных шагов можно запускать программы с кодом spark командой `spark-submit` или же писать запросы в интерактивной среде `spark-shell`.
+
+## Датасет для заданий
+
+Датасет для выполнения заданий лабораторной работы используется [такой](https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets). Из него нужны три файла &mdash; `cards_data.csv`, `transactions_data.csv`, `users_data.csv`. Переносим их на сервер sparkmaster с помощью команды `scp`.
+
+## Задачи
+
+### **Задание 1** – Количество и сумма транзакций по каждому клиенту
+Для каждого `client_id` из `transactions_data.csv` вычислить:
+  * **количество транзакций** (`txn_count`)
+  * **сумму всех транзакций** (`total_amount`)
+Отсортировать по убыванию `total_amount`.
+
+### **Задание 2** – Средняя сумма транзакций по каждой карте
+
+Для каждой `card_id` из `transactions_data.csv` вычислить **среднюю сумму транзакций** (`avg_amount`).
+Отсортировать по убыванию средней суммы.
+
+### **Задание 3** – Анализ транзакций по бренду карты
+
+Соединить `transactions_data.csv` с `cards_data.csv` по `card_id` -> `cards.id`.
+Для каждого `card_brand` вычислить:
+  * **количество транзакций** (`txn_count`)
+  * **среднюю сумму транзакций** (`avg_amount`)
+Отсортировать по убыванию `txn_count`.
+
+### **Задание 4** – Средняя сумма транзакций по возрастным группам клиентов
+
+Соединить `transactions_data.csv` с `users_data.csv` по `client_id` -> `users.id`.
+Для каждого `current_age` вычислить **среднюю сумму транзакций** (`avg_amount`).
+Отсортировать по возрастанию возраста.
+
+### **Задание 5** – Доля способов оплаты (`use_chip`)
+
+Для столбца `use_chip` из `transactions_data.csv` вычислить:
+  * **количество транзакций** (`txn_count`) для каждого способа оплаты
+  * **долю в процентах** (`percent`) от общего числа транзакций.
