@@ -26,7 +26,7 @@
 5. Далее редактируем файл `~/.bashrc`, длбавляем в конец строку:
    ```bash
    export JAVA_HOME= # здесь указываем домашнюю директорию Java
-   export PATH=$PATH:$JAVA_HOME
+   export PATH=$PATH:$JAVA_HOME:$JAVA_HOME/bin
    ```
    Директорию с Java можно узнать с помощью команды `update-alternatives --config java`
 6. Скачиваем spark с помощью команды `wget https://dlcdn.apache.org/spark/spark-3.5.6/spark-3.5.6-bin-hadoop3.tgz` и распаковываем полученный архив
@@ -47,7 +47,7 @@
     После этого выполняем команду `source ~/.bashrc`
 13. Далее повторяем шаги 4-8, 11-12 на второй, worker-машине.
 14. После этого на sparkmaster можно запускать master командой `start-master.sh -p 7077`.
-15. На той же машине мы можем также запустить и `worker` &mdash; командой `start-worker.sh spark://<spark-master-uri>`
+15. На той же машине мы можем также запустить и `worker` &mdash; командой `start-worker.sh spark://<spark-master-host>:<spark-master-port>`
 16. После этого запускаем worker и на второй, worker-машине.
 17. После проделанных шагов можно запускать программы с кодом spark командой `spark-submit` или же писать запросы в интерактивной среде `spark-shell`.
 
