@@ -1,4 +1,4 @@
-# spark-lab
+# Лабораторная работа №3: Знакмоство с Apache Spark
 
 - [spark-lab](#spark-lab)
   - [Создание standalone кластера Spark](#создание-standalone-кластера-spark)
