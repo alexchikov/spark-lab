@@ -47,7 +47,7 @@
     ```
     После этого выполняем команду `source ~/.bashrc`
 13. Далее повторяем шаги 4-8, 11-12 на второй, worker-машине.
-14. После этого на sparkmaster можно запускать master командой `start-master.sh -p 7077`.
+14. После этого на sparkmaster можно запускать master командой `start-master.sh --host 0.0.0.0`.
 15. На той же машине мы можем также запустить и `worker` &mdash; командой `start-worker.sh spark://<spark-master-host>:<spark-master-port>`
 16. После этого запускаем worker и на второй, worker-машине.
 17. После проделанных шагов можно запускать программы с кодом spark командой `spark-submit` или же писать запросы в интерактивной среде `spark-shell`.
