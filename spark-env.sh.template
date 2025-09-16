@@ -3,4 +3,4 @@ SPARK_PUBLIC_DNS=<master-public-ip>
 SPARK_MASTER_PORT=7077
 SPARK_MASTER_WEBUI_BIND_ADDRESS=0.0.0.0
 SPARK_MASTER_WEBUI_PORT=8080
-SPARK_LOCAL_IP=<master-private-ip>
+SPARK_LOCAL_IP=<внутренний ip машины, на которой мы работаем>
