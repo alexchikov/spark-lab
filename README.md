@@ -9,6 +9,7 @@
     - [Задание 3 – Анализ транзакций по бренду карты](#задание-3--анализ-транзакций-по-бренду-карты)
     - [Задание 4 – Средняя сумма транзакций по возрастным группам клиентов](#задание-4--средняя-сумма-транзакций-по-возрастным-группам-клиентов)
     - [Задание 5 – Доля способов оплаты](#задание-5--доля-способов-оплаты)
+    - [Задание 6 – Определение топ-3 транзакций по сумме для каждого клиента (окна).](#задание-6--определение-топ-3-транзакций-по-сумме-для-каждого-клиента-окна)
 
 
 ## Создание standalone кластера Spark
@@ -54,11 +55,25 @@
 ## Датасет для заданий
 
 Датасет для выполнения заданий лабораторной работы используется [такой](https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets). Из него нужны три файла &mdash; `cards_data.csv`, `transactions_data.csv`, `users_data.csv`. 
-Далее для того, чтобы каждый worker мог обрабатывать файлы их можно загрузить в Yandex Object Storage.
+Далее для того, чтобы каждый worker мог обрабатывать файлы их можно загрузить в Yandex Object Storage. Сделать это можно прямо из веб-консоли Yandex Cloud. Также нам понадобятся *access key* и *secret key* для взаимодействия с хранилищем в `main.py` и при запуске программы на кластере. [Документация как их получить](https://yandex.cloud/ru/docs/iam/operations/authentication/manage-access-keys#create-access-key).
 
 ## Задачи
 
-Для выполнения задач необходимо написать на python скрипт, который поднимает spark-сессию и затем выполняет необходимые запросы. Шаблон скрипта есть в репозитории, необходимо вывести результат для каждой задачи в `stdout`. Для решения можно использовать как Spark SQL, так и Spark Dataframe API. 
+Для выполнения задач необходимо написать на python скрипт, который поднимает spark-сессию и затем выполняет необходимые запросы. Шаблон скрипта есть в репозитории, необходимо вывести результат для каждой задачи в `stdout`. Для решения можно использовать как Spark SQL, так и Spark Dataframe API. Команда для запуска скрипта на кластере:
+```bash
+spark-submit \
+  --master spark://<spark-master-host>:<spark-master-port> \
+  --conf spark.executor.memory=2g \
+  --conf spark.hadoop.fs.s3a.access.key=<access-key> \
+  --conf spark.hadoop.fs.s3a.secret.key=<secret-key> \
+  --conf spark.hadoop.fs.s3a.endpoint=https://storage.yandexcloud.net \
+  --conf spark.hadoop.fs.s3a.path.style.access=true \
+  --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
+  --conf spark.driver.bindAddress=0.0.0.0 \
+  --conf spark.driver.host=<master-public-ip> \
+  --packages org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.691 \
+  main.py
+```
 
 ### Задание 1 – Количество и сумма транзакций по каждому клиенту
 Для каждого `client_id` из `transactions_data.csv` вычислить:
@@ -90,3 +105,7 @@
 Для столбца `use_chip` из `transactions_data.csv` вычислить:
   * количество транзакций (`txn_count`) для каждого способа оплаты
   * долю в процентах (`percent`) от общего числа транзакций.
+
+### Задание 6 – Определение топ-3 транзакций по сумме для каждого клиента (окна).
+
+Используя `transactions_data.csv`, нужно для каждого `client_id` определить **три самые крупные транзакции** по полю `amount`.
