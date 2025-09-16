@@ -20,6 +20,7 @@ if __name__ == '__main__':
         .master('spark://<spark-master-host>:<spark-master-port>') \
         .config(conf=conf) \
         .getOrCreate()
+    # spark-master-host и spark-master-port нужно поменять на хост и порт своего spark мастера
 
     spark.sparkContext.setLogLevel('ERROR')
 
@@ -71,7 +72,7 @@ if __name__ == '__main__':
         StructField('card_on_dark_web', StringType())
     ])
 
-    bucket = "<bucket-name>"
+    bucket = "<bucket-name>"  # change me
 
     sdf_transactions = spark.read.csv(f's3a://{bucket}/transactions_data.csv',
                                       header=True, schema=schema_transactions)
