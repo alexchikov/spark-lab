@@ -75,6 +75,8 @@ spark-submit \
   main.py
 ```
 
+[Cheat-sheet по PySpark](https://www.globalsqa.com/pyspark-cheat-sheet/)
+
 ### Задание 1 – Количество и сумма транзакций по каждому клиенту
 Для каждого `client_id` из `transactions_data.csv` вычислить:
   * количество транзакций (`txn_count`)
