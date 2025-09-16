@@ -53,9 +53,12 @@
 
 ## Датасет для заданий
 
-Датасет для выполнения заданий лабораторной работы используется [такой](https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets). Из него нужны три файла &mdash; `cards_data.csv`, `transactions_data.csv`, `users_data.csv`. Переносим их на сервер sparkmaster с помощью команды `scp`.
+Датасет для выполнения заданий лабораторной работы используется [такой](https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets). Из него нужны три файла &mdash; `cards_data.csv`, `transactions_data.csv`, `users_data.csv`. 
+Далее для того, чтобы каждый worker мог обрабатывать файлы их можно загрузить в Yandex Object Storage.
 
 ## Задачи
+
+Для выполнения задач необходимо написать на python скрипт, который поднимает spark-сессию и затем выполняет необходимые запросы. Шаблон скрипта есть в репозитории, необходимо вывести результат для каждой задачи в `stdout`. Для решения можно использовать как Spark SQL, так и Spark Dataframe API. 
 
 ### Задание 1 – Количество и сумма транзакций по каждому клиенту
 Для каждого `client_id` из `transactions_data.csv` вычислить:
