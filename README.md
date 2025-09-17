@@ -26,7 +26,7 @@
 4. Обновляем список пакетов командой `sudo apt update` и устанавливаем java 11 версии с помощью команды `sudo apt install openjdk-11-jdk -y`.
 5. Далее редактируем файл `~/.bashrc`, длбавляем в конец строку:
    ```bash
-   export JAVA_HOME= # здесь указываем домашнюю директорию Java
+   export JAVA_HOME= # здесь указываем домашнюю директорию Java, например /usr/lib/jvm/java-11-openjdk-amd64/
    export PATH=$PATH:$JAVA_HOME:$JAVA_HOME/bin
    ```
    Директорию с Java можно узнать с помощью команды `update-alternatives --config java`
