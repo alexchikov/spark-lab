@@ -9,7 +9,6 @@ if __name__ == '__main__':
     conf = SparkConf() \
         .set('spark.executor.memory', '2g') \
         .set("spark.submit.deployMode", "client") \
-        .set("spark.hadoop.fs.s3a.access.key", "<>") \
         .set("spark.hadoop.fs.s3a.access.key", "<YOUR_AWS_ACCESS_KEY_ID>") \
         .set("spark.hadoop.fs.s3a.secret.key", "<YOUR_AWS_SECRET_ACCESS_KEY>") \
         .set("spark.hadoop.fs.s3a.path.style.access", "true") \
