@@ -32,7 +32,7 @@
    Директорию с Java можно узнать с помощью команды `update-alternatives --config java`
 6. Скачиваем spark с помощью команды `wget https://dlcdn.apache.org/spark/spark-3.5.6/spark-3.5.6-bin-hadoop3.tgz` и распаковываем полученный архив
 7. Переименовываем его в папку `/opt/spark`
-8. В каталоге `/opt/spark/conf` находим шаблоны для файлов конфигураций spark. Убираем постфикс `.template` дял каждого из них
+8. В каталоге `/opt/spark/conf` находим шаблоны для файлов конфигураций spark `spark-defaults.conf.template`, `spark-env.sh.template`, `workers.template`. Убираем постфикс `.template` для каждого из них
 9. Прежде чем добавить worker в файл с конфигурацией `workers` необходимо добавить его в `/etc/hosts`. Пример:
     ```bash
     # ...
