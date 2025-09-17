@@ -55,7 +55,7 @@
 ## Датасет для заданий
 
 Датасет для выполнения заданий лабораторной работы используется [такой](https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets). Из него нужны три файла &mdash; `cards_data.csv`, `transactions_data.csv`, `users_data.csv`. 
-Далее для того, чтобы каждый worker мог обрабатывать файлы их можно загрузить в Yandex Object Storage. Сделать это можно прямо из веб-консоли Yandex Cloud. Там мы можем в создать bucket, в который загрузим все файлы. Также нам понадобятся *access key* и *secret key* для взаимодействия с хранилищем в `main.py` и при запуске программы на кластере. [Документация как их получить](https://yandex.cloud/ru/docs/iam/operations/authentication/manage-access-keys#create-access-key).
+Далее для того, чтобы каждый worker мог обрабатывать файлы их можно загрузить в Yandex Object Storage. Сделать это можно прямо из веб-консоли Yandex Cloud. Там мы можем создать bucket, в который загрузим все файлы. Также нам понадобятся *access key* и *secret key* для взаимодействия с хранилищем в `main.py` и при запуске программы на кластере. [Документация как их получить](https://yandex.cloud/ru/docs/iam/operations/authentication/manage-access-keys#create-access-key).
 
 ## Задачи
 
